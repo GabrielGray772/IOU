@@ -45,7 +45,7 @@ function LoginScreen({ navigation }) {
                                 style={styles.editBox}
                                 margin= '4%'
                                 placeholder="Group Name"
-                                keyboardType="defualt"
+                                keyboardType= "default"
                                 //set to content type to username to enable autofill
                                 textContentType='username'
                             />
@@ -57,7 +57,7 @@ function LoginScreen({ navigation }) {
                                 onChangeText={handleChange("password")}
                                 style={styles.editBox}
                                 placeholder="Password"
-                                keyboardType="defualt"
+                                keyboardType="default"
                                 //set content type to password to enable autofill
                                 textContentType="password"
                             />

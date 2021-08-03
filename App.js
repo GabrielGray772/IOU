@@ -19,7 +19,7 @@ import AuthNavigator from './navigation/AuthNavigator';
 import { Form } from 'formik';
 
 
-const Tweets = ( {navigation} ) => (
+/*const Tweets = ( {navigation} ) => (
   <Screen>
     <Text>
       Tweets
@@ -69,6 +69,27 @@ const TabNavigator = () => (
   </Tab.Navigator>
 
 )
+*/
+
+/*const express = require('express');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+
+const connection = mysql.createPool({
+  host     : 'ioudatabase.cckn61csuwed.eu-west-2.rds.amazonaws.com', // Pulled from MySQL
+  user     : 'admin',     // Pulled from MySQL
+  password : 'IOU12341',  // Pulled from MySQL
+  database : 'I-O-U_group_database' // I-O-U on mySQL server
+});
+
+connection.connect(function(err) {
+  if (err) {
+    return console.error('error: ' + err.message);
+  }
+
+  console.log('Connected to the MySQL server.');
+});
+*/
 
 export default function App() {
   return (
