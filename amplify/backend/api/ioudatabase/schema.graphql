@@ -1,0 +1,35 @@
+type Balance @model @auth(rules: [{allow: public}]) @key(name: "byUsers", fields: ["usersID"]) {
+  id: ID!
+  User_id: ID
+  Balance: Float
+  Toward_UserID: ID
+  usersID: ID
+}
+
+type Transactions @model @auth(rules: [{allow: public}]) @key(name: "byUsers", fields: ["usersID"]) {
+  id: ID!
+  Date: AWSDate
+  Category: String
+  Value: Float!
+  User_ID_Owed: ID
+  User_ID: ID
+  Group_ID: ID
+  usersID: ID
+}
+
+type Users @model @auth(rules: [{allow: public}]) @key(name: "byGroup", fields: ["groupID"]) {
+  id: ID!
+  User_ID: ID!
+  User_Name: String!
+  groupID: ID
+  Transactions: [Transactions] @connection(keyName: "byUsers", fields: ["id"])
+  Balances: [Balance] @connection(keyName: "byUsers", fields: ["id"])
+}
+
+type Group @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Group_Name: String!
+  Password: String!
+  Users: [Users] @connection(keyName: "byGroup", fields: ["id"])
+}
+ 
