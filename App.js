@@ -5,6 +5,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import { NavigationContainer} from '@react-navigation/native';
 
+//Import backend
+import Amplify from 'aws-amplify'
+import config from './src/aws-exports'
+Amplify.configure(config)
+
 import Screen from './components/Screen';
 
 //import GroupCreationScreen from './app/Screens/GroupCreationScreen';

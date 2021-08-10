@@ -4,12 +4,42 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 import appColor from '../../config/appColor';
 import { Formik } from 'formik';
 
+//Backend
+import { API, graphqlOperation } from 'aws-amplify';
+import { createGroup } from '../../src/graphql/mutations';
+
 import color from '../../config/appColor';
 
+const groupInitialState = { Group_Name: '', Password: '' }
+
+
+//begin app
 function GroupCreationScreen({ navigation }) {
     const [groupName, setGroupName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    //backend
+    const [formState, setFormState] = useState(groupInitialState)
+    const [groups, setGroups] = useState([])
+
+  function setInput(key, value) {
+    setFormState({ ...formState, [key]: value })
+    console.log("iam here key",key, value)
+  }
+
+  async function addGroup() {
+      console.log("begin addGroup function")
+    try {
+      const group = { ...formState }
+      setGroups([...groups, group])
+      setFormState(groupInitialState)
+      await API.graphql(graphqlOperation(createGroup, {input: group}))
+      console.log("Group Created", group)
+    } catch (err) {
+      console.log('error creating group:', err)
+    }
+  }
 
     return (
         <ImageBackground 
@@ -36,22 +66,22 @@ function GroupCreationScreen({ navigation }) {
                 
 
                 <TextInput
-                    onChangeText={handleChange("groupName")}
+                    onChangeText={handleChange("groupName"),val => setInput('Group_Name', val)}
                     style={styles.editBox}
                     placeholder="Group Name"
                     placeholderTextColor= {appColor.primaryGray}
-                    keyboardType="defualt"
+                    keyboardType="default"
                     //set to content type to username to enable autofill
                     textContentType='username'
                 />
 
                 <TextInput
                     secureTextEntry
-                    onChangeText={handleChange("password")}
+                    onChangeText={handleChange("password"), val => setInput('Password', val)}
                     style={styles.editBox}
                     placeholder="Password"
                     placeholderTextColor= {appColor.primaryGray}
-                    keyboardType="defualt"
+                    keyboardType="default"
                     //set to content type to newPassword to allow saving for future use
                     textContentType='password'
                 />
@@ -62,7 +92,7 @@ function GroupCreationScreen({ navigation }) {
                     style={styles.editBox}
                     placeholder="Confirm Password"
                     placeholderTextColor= {appColor.primaryGray}
-                    keyboardType="defualt"
+                    keyboardType="default"
                     //set to content type to newPassword to allow saving for future use
                     textContentType='password'
                 />
@@ -78,7 +108,9 @@ function GroupCreationScreen({ navigation }) {
                         title = "Next"
                         color = {appColor.primaryBlack}
                         //onPress={handleSubmit}
-                        onPress={() => navigation.navigate("AddMemberScreen")}
+                        // Does not seem to be calling AddGroup
+                        onPress={addGroup}
+                        //() => navigation.navigate("AddMemberScreen")
                     />
                 </View>
                 <View
